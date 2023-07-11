@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/jsong73/threejs-sample/issues"
   },
-  "homepage": "https://github.com/jsong73/threejs-sample#readme"
+  "homepage": "https://github.com/jsong73/threejs-sample#readme",
+  "dependencies": {
+    "@tweenjs/tween.js": "^21.0.0"
+  }
 }
