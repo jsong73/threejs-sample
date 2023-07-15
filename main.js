@@ -44,8 +44,8 @@ loader.load(
     }
   );
 
-const zoomDuration = 1000;
-const zoomDistance = 1.0;
+const zoomDuration = 2000;
+const zoomDistance = 1.4;
   
 function onMouseClick(event) {
     const canvasBounds = renderer.domElement.getBoundingClientRect();
