@@ -47,39 +47,65 @@ loader.load(
 const zoomDuration = 2000;
 const zoomDistance = 1.2;
 let isZoomed = false;
-  
+let isRotating = false;
+
+function startRotation() {
+  isRotating = true;
+}
+
+function stopRotation() {
+  isRotating = false;
+}
+
 function keyDownFunction(event) {
-    if (!isZoomed) {
-        isZoomed = true;
-        const currentCameraPosition = camera.position.clone();
-        const targetCameraPosition = laptopModel.position.clone().add(new THREE.Vector3(0, .75, zoomDistance));
-    
-        new TWEEN.Tween(currentCameraPosition)
-          .to(targetCameraPosition, zoomDuration)
-          .easing(TWEEN.Easing.Quadratic.InOut)
-          .onUpdate(() => {
-            camera.position.copy(currentCameraPosition);
-            camera.lookAt(targetPosition);
-          })
-          .onComplete(() => {
-            isZoomed = false;
-          })
-          .start();
-      }
-    }
-  
-window.addEventListener("keydown", keyDownFunction)
+  if (!isZoomed) {
+    isZoomed = true;
+    const currentCameraPosition = camera.position.clone();
+    const targetCameraPosition = laptopModel.position.clone().add(new THREE.Vector3(0, .75, zoomDistance));
 
+    new TWEEN.Tween(currentCameraPosition)
+      .to(targetCameraPosition, zoomDuration)
+      .easing(TWEEN.Easing.Quadratic.InOut)
+      .onUpdate(() => {
+        camera.position.copy(currentCameraPosition);
+        camera.lookAt(targetPosition);
+      })
+      .onComplete(() => {
+        isZoomed = false;
 
-// Rendering the scene
+        // Start rotation after the zoom animation is complete
+        startRotation();
+      })
+      .start();
+  }
+}
+
+function keyUpFunction(event) {
+  // Stop rotation when key is released
+  stopRotation();
+}
+
+window.addEventListener("keydown", keyDownFunction);
+window.addEventListener("keyup", keyUpFunction);
+
+// Function to handle rotation
+function handleRotation() {
+  if (isRotating) {
+    // rotation speed
+    laptopModel.rotation.y += 0.01; 
+  }
+}
+
 function animate() {
   requestAnimationFrame(animate);
+
+  handleRotation();
+
   renderer.render(scene, camera);
   TWEEN.update();
 }
 
 animate();
-
 
 // this is function for raycaster on mouse click 
 // function onMouseClick(event) {
