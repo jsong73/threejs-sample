@@ -45,36 +45,30 @@ loader.load(
   );
 
 const zoomDuration = 2000;
-const zoomDistance = 1.4;
+const zoomDistance = 1.0;
+let isZoomed = false;
   
-function onMouseClick(event) {
-    const canvasBounds = renderer.domElement.getBoundingClientRect();
-    const mouse = new THREE.Vector2(
-    ((event.clientX - canvasBounds.left) / canvasBounds.width) * 2 - 1,
-    -((event.clientY - canvasBounds.top) / canvasBounds.height) * 2 + 1
-);
-  
-const raycaster = new THREE.Raycaster();
-raycaster.setFromCamera(mouse, camera);
-  
-const intersects = raycaster.intersectObject(laptopModel, true);
-  
-if (intersects.length > 0) {
-    const currentCameraPosition = camera.position.clone();
-      const targetCameraPosition = intersects[0].point.clone().add(new THREE.Vector3(0, 0, zoomDistance));
-  
-      new TWEEN.Tween(currentCameraPosition)
-        .to(targetCameraPosition, zoomDuration)
-        .easing(TWEEN.Easing.Quadratic.InOut)
-        .onUpdate(() => {
-          camera.position.copy(currentCameraPosition);
-          camera.lookAt(targetPosition);
-        })
-        .start();
+function keyDownFunction(event) {
+    if (!isZoomed) {
+        isZoomed = true;
+        const currentCameraPosition = camera.position.clone();
+        const targetCameraPosition = laptopModel.position.clone().add(new THREE.Vector3(0, .75, zoomDistance));
+    
+        new TWEEN.Tween(currentCameraPosition)
+          .to(targetCameraPosition, zoomDuration)
+          .easing(TWEEN.Easing.Quadratic.InOut)
+          .onUpdate(() => {
+            camera.position.copy(currentCameraPosition);
+            camera.lookAt(targetPosition);
+          })
+          .onComplete(() => {
+            isZoomed = false;
+          })
+          .start();
+      }
     }
-  }
   
-window.addEventListener("click", onMouseClick);
+window.addEventListener("keydown", keyDownFunction)
 
 
 // Rendering the scene
@@ -85,3 +79,34 @@ function animate() {
 }
 
 animate();
+
+
+// this is function for raycaster on mouse click 
+// function onMouseClick(event) {
+//     const canvasBounds = renderer.domElement.getBoundingClientRect();
+//     const mouse = new THREE.Vector2(
+//     ((event.clientX - canvasBounds.left) / canvasBounds.width) * 2 - 1,
+//     -((event.clientY - canvasBounds.top) / canvasBounds.height) * 2 + 1
+// );
+  
+// const raycaster = new THREE.Raycaster();
+// raycaster.setFromCamera(mouse, camera);
+  
+// const intersects = raycaster.intersectObject(laptopModel, true);
+  
+// if (intersects.length > 0) {
+//     const currentCameraPosition = camera.position.clone();
+//       const targetCameraPosition = intersects[0].point.clone().add(new THREE.Vector3(0, 0, zoomDistance));
+  
+//       new TWEEN.Tween(currentCameraPosition)
+//         .to(targetCameraPosition, zoomDuration)
+//         .easing(TWEEN.Easing.Quadratic.InOut)
+//         .onUpdate(() => {
+//           camera.position.copy(currentCameraPosition);
+//           camera.lookAt(targetPosition);
+//         })
+//         .start();
+//     }
+//   }
+  
+// window.addEventListener("click", onMouseClick);
