@@ -80,13 +80,14 @@ function keyDownFunction(event) {
   }
 }
 
-function keyUpFunction(event) {
-  // Stop rotation when key is released
-  stopRotation();
-}
+// function to stop rotation when key is released
 
-window.addEventListener("keydown", keyDownFunction);
-window.addEventListener("keyup", keyUpFunction);
+// function keyUpFunction(event) {
+//   stopRotation();
+// }
+// window.addEventListener("keyup", keyUpFunction);
+ 
+window.addEventListener("keydown", keyDownFunction);   
 
 // Function to handle rotation
 function handleRotation() {
