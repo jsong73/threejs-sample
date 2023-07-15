@@ -45,7 +45,7 @@ loader.load(
   );
 
 const zoomDuration = 2000;
-const zoomDistance = 1.0;
+const zoomDistance = 1.2;
 let isZoomed = false;
   
 function keyDownFunction(event) {
