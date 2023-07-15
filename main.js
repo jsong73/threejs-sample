@@ -17,7 +17,7 @@ renderer.domElement.style.pointerEvents = "auto";
 document.getElementById("container").appendChild(renderer.domElement);
 
 // Creating light
-const light = new THREE.PointLight(0xffffff, 2);
+const light = new THREE.PointLight(0xffffff, 4);
 light.position.set(0, 2, 2);
 scene.add(light);
 
