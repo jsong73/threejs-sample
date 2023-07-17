@@ -53,9 +53,9 @@ function startRotation() {
   isRotating = true;
 }
 
-function stopRotation() {
-  isRotating = false;
-}
+// function stopRotation() {
+//   isRotating = false;
+// }
 
 function keyDownFunction(event) {
   if (!isZoomed) {
@@ -81,7 +81,6 @@ function keyDownFunction(event) {
 }
 
 // function to stop rotation when key is released
-
 // function keyUpFunction(event) {
 //   stopRotation();
 // }
